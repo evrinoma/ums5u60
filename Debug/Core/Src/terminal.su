@@ -1,0 +1,16 @@
+terminal.c:4:6:action_help	32	static
+terminal.c:26:6:action_on_pc13	16	static
+terminal.c:32:6:action_off_pc13	16	static
+terminal.c:38:6:action_on_pc15	16	static
+terminal.c:44:6:action_off_pc15	16	static
+terminal.c:50:6:action_on_blink	16	static
+terminal.c:56:6:action_off_blink	16	static
+terminal.c:62:6:action_cdc_feedback	16	static
+terminal.c:68:6:action_off_feedback	16	static
+terminal.c:74:6:action_on_adc	16	static
+terminal.c:80:6:action_off_adc	16	static
+terminal.c:86:6:action_adc	32	static
+terminal.c:93:6:action_status	16	static
+terminal.c:98:6:action_write	16	static
+terminal.c:105:6:action_read	16	static
+terminal.c:111:9:command_parse	568	static
