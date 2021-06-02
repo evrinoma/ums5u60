@@ -5,11 +5,11 @@ void init_flash(){
 	  FLASH->KEYR = 0xCDEF89AB;
 }
 
-void read(tcontrol *p, uint32_t address)
+void read(ControlTypeDef *p, uint32_t address)
 {
    uint32_t *ptr = (uint32_t* ) p;
-   memcpy(ptr, address, sizeof(tcontrol));
-   p = (tcontrol*)(ptr);
+   memcpy(ptr, address, sizeof(ControlTypeDef));
+   p = (ControlTypeDef*)(ptr);
 }
 
 void erase(unsigned int pageAddress) {
@@ -26,11 +26,11 @@ void erase(unsigned int pageAddress) {
 	FLASH->CR &= ~FLASH_CR_PER;
 }
 
-void write(tcontrol *p, uint32_t address)
+void write(ControlTypeDef *p, uint32_t address)
 {
     uint32_t *pRecord = (uint32_t* )p;
     uint32_t flash_address = address;
 
-    for(int i=0; i<sizeof(tcontrol); i+=4, pRecord++, flash_address+=4)
+    for(int i=0; i<sizeof(ControlTypeDef); i+=4, pRecord++, flash_address+=4)
         HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, flash_address,*pRecord);
 }

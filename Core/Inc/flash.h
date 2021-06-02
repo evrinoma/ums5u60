@@ -7,8 +7,8 @@
 #define LAST_PAGE_ADDRESS 0x0801FC00
 
 void init_flash();
-void read(tcontrol *p, uint32_t address);
-void write(tcontrol *p, uint32_t address);
+void read(ControlTypeDef *p, uint32_t address);
+void write(ControlTypeDef *p, uint32_t address);
 void erase(unsigned int pageAddress);
 
 

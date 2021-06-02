@@ -1,6 +1,6 @@
 #include "utils.h"
 
-extern tcontrol control;
+extern ControlTypeDef control;
 extern ADC_HandleTypeDef* hadc2;
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
@@ -107,22 +107,27 @@ float get_sense_12V_normalized() {
 	return (((float)control.sense_12V_normalized)*control.sense_12V_base)/4096;
 }
 
-void init_hw()
+void init_bios()
 {
-	set_adc_timer();
 	init_flash();
 }
 
-void read_config(tcontrol *p)
+void init_hw()
 {
-	tcontrol config = DEFAULT_CONFIG;
+	set_adc_timer();
+	init_i2c2();
+}
+
+void read_config(ControlTypeDef *p)
+{
+	ControlTypeDef config = DEFAULT_CONFIG;
 	read(p, LAST_PAGE_ADDRESS);
 	if (!validate_config(p)){
-		memcpy(p, &config, sizeof(tcontrol));
+		memcpy(p, &config, sizeof(ControlTypeDef));
 	}
 }
 
-uint8_t validate_config(tcontrol *p)
+uint8_t validate_config(ControlTypeDef *p)
 {
 	return ((p->config_begin == CONFIG_BEGIN)&&(p->config_end == CONFIG_END));
 }

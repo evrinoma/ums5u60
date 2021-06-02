@@ -11,6 +11,7 @@
 
 #define DELAY 20
 
+void init_bios();
 void init_hw();
 
 void on_pc13();
@@ -34,8 +35,7 @@ void set_on_adc();
 void set_off_adc();
 
 void write_config();
-void read_config(tcontrol *p);
-uint8_t validate_config(tcontrol *p);
-
+void read_config(ControlTypeDef *p);
+uint8_t validate_config(ControlTypeDef *p);
 
 #endif /* INC_UTILS_H_ */

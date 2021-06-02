@@ -2,6 +2,7 @@
 #define INC_CONTROL_H_
 
 #include "stm32f3xx_hal.h"
+#include "i2c.h"
 
 #define ON 1
 #define OFF 0
@@ -19,9 +20,20 @@
 #define CONFIG_BEGIN 0x55
 #define CONFIG_END 0xAA
 
-#define DEFAULT_CONFIG { CONFIG_BEGIN, PC13_ON, PC15_ON, BLINK_ON, BLINK_ON, FEEDBACK_CDC, SENSE_12V_BASE, SENSE_12V_RESET, CONFIG_END }
+#define DEFAULT_CONFIG {  	\
+	CONFIG_BEGIN, 			\
+	PC13_ON, 				\
+	PC15_ON,				\
+	BLINK_ON, 				\
+	BLINK_ON, 				\
+	FEEDBACK_CDC, 			\
+	SENSE_12V_BASE, 		\
+	SENSE_12V_RESET, 		\
+	DEFAULT_I2C,			\
+	CONFIG_END 				\
+}
 
-typedef struct tcontrol {
+typedef struct __tControlTypeDef {
 	uint8_t config_begin;			//начало конфига
 	uint8_t pc13;   				//вкл/выкл pin13
 	uint8_t pc15;   				//вкл/выкл pin13
@@ -30,7 +42,8 @@ typedef struct tcontrol {
 	uint8_t feedback;				//терминал отправляет ответы на USB CDC
 	uint8_t sense_12V_base;			//базовое напряжение 12V
 	uint16_t sense_12V_normalized;  //текущее измерение напряжение на входе sense_12V_normalized
+	I2CTypeDef cfg_i2c;				//кофигурация I2C
 	uint8_t config_end;				//конец конфига
-} tcontrol;
+} ControlTypeDef;
 
 #endif /* INC_CONTROL_H_ */
