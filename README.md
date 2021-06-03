@@ -5,11 +5,11 @@
 #hw setting 
 
 используемое оборудование
-	GPIO
-	GPIOC - GPIO_PIN_13
-	GPIOA - GPIO_PIN_15
-	TIM3
-	ADC2
+	1. GPIO
+		GPIOC - GPIO_PIN_13
+		GPIOA - GPIO_PIN_15
+	2. TIM3
+	3. ADC2
 
 выставить предделитель системной частоты таймера 
 

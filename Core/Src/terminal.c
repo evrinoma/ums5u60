@@ -108,6 +108,12 @@ void action_read(tstatus *terminal, taction *action)
 	sprintf(terminal->result, action->info);
 }
 
+void action_dev(tstatus *terminal, taction *action)
+{
+	terminal->state = feedback();
+	sprintf(terminal->result, "REVID: %u DEVID: %u\r\n",  HAL_GetREVID(), HAL_GetDEVID());
+}
+
 tstatus command_parse(uint8_t *buff) {
 	tstatus terminal = { CMD_ERASE, { 0 } };
 	uint8_t *list_lexems[LEXEM_LENGTH] = { 0 };

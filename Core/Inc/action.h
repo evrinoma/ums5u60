@@ -46,6 +46,9 @@
 #define READ "read"
 #define READ_INFO "read config\r\n"
 
+#define DEV "dev"
+#define DEV_INFO "read config\r\n"
+
 void action_help(tstatus *terminal, taction *action);
 void action_on_pc13(tstatus *terminal, taction *action);
 void action_off_pc13(tstatus *terminal, taction *action);
@@ -61,6 +64,7 @@ void action_adc(tstatus *terminal, taction *action);
 void action_status(tstatus *terminal, taction *action);
 void action_write(tstatus *terminal, taction *action);
 void action_read(tstatus *terminal, taction *action);
+void action_dev(tstatus *terminal, taction *action);
 
 taction actions[] = {
 		{ action_help, HELP, strlen(HELP), HELP_INFO,  strlen(HELP_INFO)},
@@ -77,7 +81,8 @@ taction actions[] = {
 		{ action_adc, ADC, strlen(ADC), ADC_INFO,  strlen(ADC_INFO) },
 		{ action_write, WRITE, strlen(WRITE), WRITE_INFO,  strlen(WRITE_INFO) },
 		{ action_read, READ, strlen(READ), READ_INFO,  strlen(READ_INFO) },
-		{ action_status, STATUS, strlen(STATUS), STATUS_INFO,  strlen(STATUS_INFO) }
+		{ action_status, STATUS, strlen(STATUS), STATUS_INFO,  strlen(STATUS_INFO) },
+		{ action_dev, DEV, strlen(DEV), DEV_INFO,  strlen(DEV_INFO) }
 };
 
 uint8_t count_actions = sizeof(actions) / sizeof(actions[0]);

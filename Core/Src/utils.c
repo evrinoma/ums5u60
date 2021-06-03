@@ -1,10 +1,10 @@
 #include "utils.h"
 
 extern ControlTypeDef control;
-extern ADC_HandleTypeDef* hadc2;
+extern ADC_HandleTypeDef *hadc2;
+extern TIM_HandleTypeDef htim3;
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	control.sense_12V_normalized = HAL_ADC_GetValue(hadc);
 }
 
@@ -27,29 +27,26 @@ void on_pc13() {
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 }
 
-void off_pc13()
-{
+void off_pc13() {
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
 }
 
-void on_pc15()
-{
+void on_pc15() {
 	if (control.pc15)
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET);
 }
 
-void off_pc15()
-{
+void off_pc15() {
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET);
 }
 
-void set_adc_timer()
-{
+void set_adc_timer() {
 	TIM3->CR1 = ((control.adc) ? TIM_CR1_CEN : TIM_CR1_CEN_Pos) | TIM_CR1_ARPE;
 
 	if (control.adc) {
-		while(HAL_ADCEx_Calibration_Start(& hadc2, ADC_SINGLE_ENDED) != HAL_OK);
-		HAL_ADC_Start_IT(& hadc2);
+		while (HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED) != HAL_OK)
+			;
+		HAL_ADC_Start_IT(&hadc2);
 	}
 }
 
@@ -103,41 +100,43 @@ void set_off_adc() {
 }
 
 float get_sense_12V_normalized() {
-	control.sense_12V_normalized = HAL_ADC_GetValue (& hadc2);
-	return (((float)control.sense_12V_normalized)*control.sense_12V_base)/4096;
+	control.sense_12V_normalized = HAL_ADC_GetValue(&hadc2);
+	return (((float) control.sense_12V_normalized) * control.sense_12V_base)
+			/ 4096;
 }
 
-void init_bios()
-{
+void init_bios() {
 	init_flash();
 }
 
-void init_hw()
-{
+void init_timer() {
+	htim3.Init.Prescaler = control.cfg_sync.us_delay_a * 32;
+	if (HAL_TIM_Base_Init(&htim3) != HAL_OK) {
+		Error_Handler();
+	}
 	set_adc_timer();
+}
+
+void init_hw() {
+	us_delay_calibrate();
+	init_timer();
 	init_i2c2();
 }
 
-void read_config(ControlTypeDef *p)
-{
+void read_config(ControlTypeDef *p) {
 	ControlTypeDef config = DEFAULT_CONFIG;
 	read(p, LAST_PAGE_ADDRESS);
-	if (!validate_config(p)){
+	if (!validate_config(p)) {
 		memcpy(p, &config, sizeof(ControlTypeDef));
 	}
 }
 
-uint8_t validate_config(ControlTypeDef *p)
-{
-	return ((p->config_begin == CONFIG_BEGIN)&&(p->config_end == CONFIG_END));
+uint8_t validate_config(ControlTypeDef *p) {
+	return ((p->config_begin == CONFIG_BEGIN) && (p->config_end == CONFIG_END));
 }
 
-void write_config()
-{
+void write_config() {
 	erase(LAST_PAGE_ADDRESS);
 	write(&control, LAST_PAGE_ADDRESS);
 }
-
-
-
 

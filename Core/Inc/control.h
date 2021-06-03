@@ -3,6 +3,7 @@
 
 #include "stm32f3xx_hal.h"
 #include "i2c.h"
+#include "sync.h"
 
 #define ON 1
 #define OFF 0
@@ -30,8 +31,10 @@
 	SENSE_12V_BASE, 		\
 	SENSE_12V_RESET, 		\
 	DEFAULT_I2C,			\
+	DEFAULT_SYNC,			\
 	CONFIG_END 				\
 }
+
 
 typedef struct __tControlTypeDef {
 	uint8_t config_begin;			//начало конфига
@@ -43,6 +46,7 @@ typedef struct __tControlTypeDef {
 	uint8_t sense_12V_base;			//базовое напряжение 12V
 	uint16_t sense_12V_normalized;  //текущее измерение напряжение на входе sense_12V_normalized
 	I2CTypeDef cfg_i2c;				//кофигурация I2C
+	SyncTypeDef cfg_sync;			//кофигурация SYNC
 	uint8_t config_end;				//конец конфига
 } ControlTypeDef;
 

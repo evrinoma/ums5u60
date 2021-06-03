@@ -49,7 +49,8 @@ I2C_HandleTypeDef hi2c2;
 TIM_HandleTypeDef htim3;
 
 /* USER CODE BEGIN PV */
-ControlTypeDef control = { CONFIG_BEGIN, PC13_ON, PC15_ON, BLINK_ON, BLINK_ON, FEEDBACK_CDC, SENSE_12V_BASE, SENSE_12V_RESET, CONFIG_END};
+ControlTypeDef control = DEFAULT_CONFIG;
+
 uint8_t rx[RX_LENGTH];
 uint8_t cmd[RX_LENGTH];
 uint8_t tx[RX_LENGTH];
@@ -296,7 +297,7 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 0;
+  htim3.Init.Prescaler = 720;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 65535;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
