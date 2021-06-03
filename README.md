@@ -5,6 +5,7 @@
 #hw setting 
 
 используемое оборудование
+
 	1. GPIO
 		GPIOC - GPIO_PIN_13
 		GPIOA - GPIO_PIN_15
